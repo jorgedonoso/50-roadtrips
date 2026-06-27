@@ -1,21 +1,17 @@
-import { getContentfulLocations } from "@/src/logic/contentfulLogic";
-import Image from "next/image";
+import { regions } from "@/src/data/regions";
+import Link from "next/link";
 
 export default async function HomePage() {
-  const locations = await getContentfulLocations();
-
   return (
-    <div className="w-full flex flex-wrap justify-center">
-      {locations?.map((location) => (
-        <div key={location.id}>
-          <Image
-            src={location.imageThumbUrl}
-            alt={location.title}
-            width={128}
-            height={128}
-            className="transition-transform duration-300 ease-out hover:scale-115"
-          />
-        </div>
+    <div className="grid h-screen grid-cols-2 grid-rows-3 gap-4 p-4">
+      {regions.map((gl) => (
+        <Link
+          key={gl.slug}
+          className="flex items-center justify-center rounded bg-gray-100 text-2xl font-semibold"
+          href={`/region/${gl.slug}`}
+        >
+          {gl.name}
+        </Link>
       ))}
     </div>
   );

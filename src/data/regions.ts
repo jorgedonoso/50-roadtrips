@@ -1,0 +1,64 @@
+import slugify from "slugify";
+
+const _regions = {
+  Northeast: [
+    "Maine",
+    "New Hampshire",
+    "Vermont",
+    "Massachusetts",
+    "Rhode Island",
+    "Connecticut",
+    "New York",
+    "New Jersey",
+    "Pennsylvania",
+  ],
+  Southeast: [
+    "Delaware",
+    "Maryland",
+    "Virginia",
+    "West Virginia",
+    "Kentucky",
+    "Tennessee",
+    "North Carolina",
+    "South Carolina",
+    "Georgia",
+    "Florida",
+    "Alabama",
+    "Mississippi",
+  ],
+  Midwest: [
+    "Ohio",
+    "Michigan",
+    "Indiana",
+    "Illinois",
+    "Wisconsin",
+    "Minnesota",
+    "Iowa",
+    "Missouri",
+  ],
+  "Great Plains": [
+    "North Dakota",
+    "South Dakota",
+    "Nebraska",
+    "Kansas",
+    "Oklahoma",
+    "Texas",
+  ],
+  "Mountain West": [
+    "Montana",
+    "Wyoming",
+    "Colorado",
+    "New Mexico",
+    "Idaho",
+    "Utah",
+    "Nevada",
+    "Arizona",
+  ],
+  Pacific: ["Washington", "Oregon", "California", "Alaska", "Hawaii"],
+};
+
+export const regions = Object.entries(_regions).map(([name, states]) => ({
+  name,
+  slug: slugify(name, { lower: true }),
+  states,
+}));
