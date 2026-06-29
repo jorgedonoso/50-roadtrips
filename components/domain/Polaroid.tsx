@@ -1,5 +1,6 @@
 import { Location } from "@/src/types/Location";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export function Polaroid({
   location,
@@ -8,6 +9,8 @@ export function Polaroid({
   location: Location;
   isModal: boolean;
 }) {
+  const [isLoading, setIsLoading] = useState(true);
+
   const photo = isModal
     ? {
         photoSize: 1080,
@@ -16,9 +19,9 @@ export function Polaroid({
           "cursor-pointer relative max-w-[90vw] max-h-[90vh] flex flex-col m-6 p-6 shadow-lg bg-white box-border",
         titleClass: "text-4xl",
         subTitleClass: "text-2xl mb-6",
-        imageClass: "w-full h-full object-contain aspect-square",
+        imageClass: "w-full h-full object-cover aspect-square",
         photoWrapper:
-          "overflow-hidden bg-gray-100 flex-1 min-h-0 flex items-center justify-center",
+          "overflow-hidden bg-gray-100 flex-1 min-h-0 flex items-center justify-center relative",
       }
     : {
         photoSize: 256,
@@ -28,7 +31,7 @@ export function Polaroid({
         titleClass: "text-sm",
         subTitleClass: "text-xs pb-3",
         imageClass: "w-full h-52 object-cover aspect-square",
-        photoWrapper: "overflow-hidden bg-gray-100",
+        photoWrapper: "overflow-hidden bg-gray-100 relative",
       };
 
   const {
@@ -41,15 +44,28 @@ export function Polaroid({
     photoWrapper,
   } = photo;
 
+  useEffect(() => {
+    setIsLoading(true);
+  }, [photoUrl]);
+
   return (
     <div className={containerClass}>
       <div className={photoWrapper}>
+        {isLoading && (
+          <div className="absolute inset-0 z-10 bg-gray-200 animate-pulse flex items-center justify-center">
+            <span className="text-xs text-gray-400">Loading...</span>
+          </div>
+        )}
+
         <Image
           src={photoUrl}
           alt={location.title}
           width={photoSize}
           height={photoSize}
-          className={imageClass}
+          className={`${imageClass} transition-opacity duration-300 ${
+            isLoading ? "opacity-0" : "opacity-100"
+          }`}
+          onLoad={() => setIsLoading(false)}
         />
       </div>
 
