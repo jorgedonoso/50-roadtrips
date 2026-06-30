@@ -64,7 +64,13 @@ export default function OpenStreetMap({
         weight: 1,
       });
     });
-  }, [highlightedStates, hoveredRegion, stateToRegion, coordinates]);
+  }, [
+    highlightedStates,
+    hoveredRegion,
+    stateToRegion,
+    coordinates,
+    geoJsonData,
+  ]);
 
   return (
     <div className="h-full w-full">
