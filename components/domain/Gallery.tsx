@@ -4,9 +4,11 @@ import { useState } from "react";
 import { Location } from "@/src/types/Location";
 import { AnimatePresence, motion } from "framer-motion";
 import { Polaroid } from "./Polaroid";
+import { useMapContext } from "@/src/context/MapContext";
 
 export function Gallery({ locations }: { locations: Location[] }) {
   const [selected, setSelected] = useState<Location | null>(null);
+  const { setCoordinates } = useMapContext();
 
   return (
     <>
@@ -20,6 +22,8 @@ export function Gallery({ locations }: { locations: Location[] }) {
               key={location.id}
               onClick={() => setSelected(location)}
               style={{ transform: `rotate(${rotation}deg)` }}
+              onMouseEnter={() => setCoordinates(location.coordinates)}
+              onMouseLeave={() => setCoordinates(undefined)}
             >
               <Polaroid location={location} isModal={false} />
             </div>

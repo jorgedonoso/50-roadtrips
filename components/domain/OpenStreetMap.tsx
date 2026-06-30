@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, Marker } from "react-leaflet";
 import type { GeoJsonObject } from "geojson";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { regions } from "@/src/data/regions";
 import { useMapContext } from "@/src/context/MapContext";
+import { OpenStreetMarkerIcon } from "./OpenStreetMarkerIcon";
 interface OpenStreetMapProps {
   highlightedStates: string[];
 }
@@ -15,7 +16,7 @@ export default function OpenStreetMap({
   const [geoJsonData, setGeoJsonData] = useState<GeoJsonObject | null>(null);
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
   const geoJsonRef = useRef<L.GeoJSON | null>(null);
-  const { setHighlight } = useMapContext();
+  const { setHighlight, coordinates } = useMapContext();
 
   // Reverse lookup for hovered state to region.
   const stateToRegion = useMemo(() => {
@@ -63,7 +64,7 @@ export default function OpenStreetMap({
         weight: 1,
       });
     });
-  }, [highlightedStates, hoveredRegion, stateToRegion]);
+  }, [highlightedStates, hoveredRegion, stateToRegion, coordinates]);
 
   return (
     <div className="h-full w-full">
@@ -83,6 +84,13 @@ export default function OpenStreetMap({
             attribution="&copy; OpenStreetMap contributors"
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+
+          {coordinates && (
+            <Marker
+              position={[coordinates.lat, coordinates.long]}
+              icon={OpenStreetMarkerIcon}
+            />
+          )}
 
           {geoJsonData && (
             <GeoJSON
