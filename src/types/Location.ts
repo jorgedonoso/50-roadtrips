@@ -1,12 +1,11 @@
+import { Coordinates } from "./Coordinates";
+
 export interface Location {
   id: string;
   title: string;
   city: string;
   state: string;
-  coordinates: {
-    lon: number;
-    lat: number;
-  };
+  coordinates: Coordinates;
   photoId: string;
   imageUrl: string;
   imageThumbUrl: string;

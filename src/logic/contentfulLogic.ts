@@ -20,7 +20,7 @@ export const getContentfulLocations = async () => {
         city: contentfulRecord.fields.city,
         state: contentfulRecord.fields.state,
         coordinates: {
-          lon: contentfulRecord.fields.coordinates.lon,
+          long: contentfulRecord.fields.coordinates.lon,
           lat: contentfulRecord.fields.coordinates.lat,
         },
         photoId: contentfulRecord.fields.photo.sys.id,

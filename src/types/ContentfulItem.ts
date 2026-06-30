@@ -5,7 +5,7 @@ export interface ContentfulItem {
     city: string;
     state: string;
     coordinates: {
-      lon: number;
+      lon: number; // Can't be changed. I use correct `long` when mapping to Location.
       lat: number;
     };
     photo: { sys: { id: string } };
